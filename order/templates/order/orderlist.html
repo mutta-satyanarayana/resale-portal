@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+Checkout
+{% endblock %}
+{% block body %}
+<div class="container">
+    
+    <div class="order-info">
+        <h3 class="text-center text-warning">Your orders List</h3>
+        
+    </div>
+    {% if orderlist %}
+    <table class="table table-bordered">
+        <thead class="bg-success">
+            <tr>
+                <td>No.</td>
+                <td>Email ID</td>
+                <td>Address</td>
+                <td>City</td>
+                <td>created</td>
+                <td>Status</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orderlist %}
+            
+                <tr>
+                    <td>{{order.id}}</td>
+                    <td>{{order.email}}</td>
+                    <td>{{order.address}}</td>
+                    <td>{{order.city}}</td>
+                    <td>{{order.created}}</td>
+                    <td>
+                        {% if order.paid %}Success{% else %}processing{% endif %}
+                        <a href="{% url 'order:cancelorder' order.id %}" class="btn btn-danger">X</a>
+                    </td>
+                </tr>
+                
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}        
+    
+    <h3>No Orders are available</h3>
+    {% endif %}
+</div>
+{% endblock %}

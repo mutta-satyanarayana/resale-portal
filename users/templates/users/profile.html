@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Profile Info{% endblock%}
+
+{% load crispy_forms_tags %}
+{% block body %}
+
+<div class="container">
+	<div class="row md-6">
+        <h2 align = 'center'>User Profile Page</h2>
+        <br>
+        <br>
+		<div class="card col-md mx-1">
+        <table class="table table-border bg-info text-dark">
+            <tr>
+                <th  class= "text-info">User Name</th>
+                <td>{{user.username}}</td>
+            </tr>
+            <tr>
+                <th>First Name</th>
+                <td>{{user.first_name}}</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>{{user.last_name}}</td>
+            </tr>
+            <tr>
+                <th>Mobile</th>
+                <td>{% if pro.mobile %}{{pro.mobile}}{% else %}{% endif %}</td>
+            </tr>
+            
+            <tr>
+                <th>Addree</th>
+                <td>{{pro.address}}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{pro.city}}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{pro.country}}</td>
+            </tr>
+            <tr>
+                <th>Profile Image</th>
+                <td><img src="{{request.user.userprofile.image.url}}"  class="img-thumbnail"  style="max-width: 200px" ></td>
+            </tr>
+            <tr>
+                <td class="text-center"><a href="{% url 'users:editprofile'%}" class="btn btn-info">Edit Profile</a></td>
+                <td class="text-center"><a href="{% url 'users:removeuser' %}" class="btn btn-warning" onclick="return confirm('Are you sure you want to delete this item?');">Deactivate Account</a></td>
+            </tr>
+        </table>
+        <br>
+        
+    </div>
+    </div></div>
+    <br>
+    <br>
+{% endblock %}

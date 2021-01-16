@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+  {% block body %}
+
+  <!--single-page-->
+	<div class="single-page main-grid-border">
+		<div class="container">
+			<ol class="breadcrumb" style="margin-bottom: 5px;">
+				<li><a href="/">Home</a></li>
+				<li><a href="{% url 'products:product_list' %}">All Products</a></li>
+				<!-- <li class="active"><a href="mobiles.html">Mobiles</a></li> -->
+				<li class="active">Mobile Phone</li>
+			</ol>
+			<div class="product-desc">
+				<div class="col-md-7 product-view">
+					<h2>{{ product_detail.name }}</h2>
+					<p> <i class="glyphicon glyphicon-map-marker"></i><a href="#">{{product_detail.state}}</a>, <a href="#">{{ product_detail.city}}</a>| Added at 06:55 pm, Ad ID: {{ product_detail.id}}</p>
+					<div class="flexslider">
+						<ul class="slides">
+							<li data-thumb="{{ product_detail.image.url }}"><img src="{{ product_detail.image.url }}"/></li>
+
+              				{% for image in product_images %}
+								<li data-thumb="{{ image.image.url }}">
+									<img src="{{ image.image.url }}" />
+								</li>
+              				{% endfor %}
+
+						</ul>
+					</div>
+					<!-- FlexSlider -->
+					  <script defer src="{% static 'js/jquery.flexslider.js' %}"></script>
+					<link rel="stylesheet" href="{% static 'css/flexslider.css' %}" type="text/css" media="screen" />
+
+						<script>
+					// Can also be used with $(document).ready()
+					$(window).load(function() {
+					  $('.flexslider').flexslider({
+						animation: "slide",
+						controlNav: "thumbnails"
+					  });
+					});
+					</script>
+					<!-- //FlexSlider -->
+					<div class="product-details">
+						<h4>Brand : <a href="#">{{ product_detail.brand }}</a></h4>
+						
+
+						<p><strong>Summary</strong> {{ product_detail.description }}</p>
+
+					</div>
+					{% if user.id == product_detail.owner_id %}
+					<a href="{% url 'product:update_product' product_detail.slug %}" class="btn btn-danger">Update Product</a>	
+					<a href="{% url 'product:delete_product' product_detail.slug %}"  onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger">Remove Product</a>
+						
+						
+					{% endif %}
+
+					
+					
+					{% if user.id != product_detail.owner_id and user.is_authenticated %}
+					
+					<form action="{% url 'cart:cart_add' product_detail.id %}" method="post" align = 'center'>
+						{% csrf_token %}
+						{{cart_product_form}}
+						<input type="submit" class="btn btn-success" value="Add to cart">
+					</form>	
+					{% endif %}
+
+					{% if not user.is_authenticated %}
+					<a href="{% url 'users:login' %}" class="btn btn-warning">Add to Cart</a>
+					{% endif %}
+				
+				</div>
+				<div class="col-md-5 product-details-grid">
+					<div class="item-price">
+						<div class="product-price">
+							<p class="p-price">Price</p>
+							<h3 class="rate">&#8377; {{ product_detail.price }}</h3>
+							<div class="clearfix"></div>
+						</div>
+						<div class="condition">
+							<p class="p-price">Condition</p>
+							<h4>{{ product_detail.condition }}</h4>
+							<div class="clearfix"></div>
+						</div>
+						<div class="itemtype">
+							<p class="p-price">Category</p>
+							<h4>{{ product_detail.category }}</h4>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+					<div class="interested text-center">
+						<h4>Interested in this Ad?<small> Contact the Seller!</small></h4>
+						<p><i class="glyphicon glyphicon-earphone"></i>00-85-9999999999</p>
+					</div>
+						<div class="tips">
+						<h4>Safety Tips for Buyers</h4>
+							<ol>
+								<li><a href="#">Check product description.</a></li>
+								<li><a href="#">Check all product images.</a></li>
+								<li><a href="#">Check Product price.</a></li>
+								<li><a href="#">Check Seller Location.</a></li>
+								<li><a href="#">Compare used and new product prices.</a></li>
+								<li><a href="#">Check Seller Country.</a></li>
+								<li><a href="#">Check product brand.</a></li>
+								<li><a href="#">Check Used or New product .</a></li>
+								<li><a href="#">Check product published Date and Time.</a></li>
+							</ol>
+						</div>
+				</div>
+			<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--//single-page-->
+
+{% endblock body %}

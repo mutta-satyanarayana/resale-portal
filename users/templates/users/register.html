@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} User Registration {% endblock %}
+
+
+{% block body %}
+<div class="container">
+	<div class="card mt-3 col-md-7 mx-auto">
+		<h2 class="bg-secondary text-center text-white border rounded my-2 mx-2 p-2">Registration Page</h2>
+		<div class="card-body">
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                {{ form.as_p}}
+                <input type="submit" class="btn btn-success" value="Register">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

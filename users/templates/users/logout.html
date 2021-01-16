@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Profile Info{% endblock%}
+{% load crispy_forms_tags %}
+
+{% block body %}
+    <h1>Successfully logout</h1>
+    <h3>Thank you for Visit "Resale Portal"</h3>
+    <script type="text/javascript">
+        setTimeout(function() {
+            window.location.href = "{% url 'home' %}";
+        }, 2000);
+    </script>
+{% endblock %}
